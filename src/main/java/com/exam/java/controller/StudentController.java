@@ -50,8 +50,8 @@ public class StudentController {
     }
 
     @PutMapping("/students/{id}")
-    public ResponseEntity<Student> updateEmployee(@PathVariable(value = "id") Long studentID,
-                                                  @Valid @RequestBody Student studentDetails) throws ResourceNotFoundException {
+    public ResponseEntity<Student> updateStudent(@PathVariable(value = "id") Long studentID,
+                                                 @Valid @RequestBody Student studentDetails) throws ResourceNotFoundException {
         Student student = studentRepository.findById(studentID)
                 .orElseThrow(() -> new ResourceNotFoundException("Student not found for this id :: " + studentID));
 

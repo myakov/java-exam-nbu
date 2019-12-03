@@ -30,7 +30,7 @@ public class TeacherController {
     public ResponseEntity<Teacher> getTeacherById(@PathVariable(value = "id") Long teacherID)
             throws ResourceNotFoundException {
         Teacher teacher = teacherRepository.findById(teacherID)
-                .orElseThrow(() -> new ResourceNotFoundException("Student not found for this id :: " + teacherID));
+                .orElseThrow(() -> new ResourceNotFoundException("Teacher not found for this id :: " + teacherID));
         return ResponseEntity.ok().body(teacher);
     }
 
@@ -43,11 +43,15 @@ public class TeacherController {
     public ResponseEntity<Teacher> updateTeacher(@PathVariable(value = "id") Long teacherID,
                                                  @Valid @RequestBody Teacher teacherDetails) throws ResourceNotFoundException {
         Teacher teacher = teacherRepository.findById(teacherID)
-                .orElseThrow(() -> new ResourceNotFoundException("Student not found for this id :: " + teacherID));
+                .orElseThrow(() -> new ResourceNotFoundException("Teacher not found for this id :: " + teacherID));
 
-        teacher.setEmailId(teacherDetails.getEmailId());
-        teacher.setLastName(teacherDetails.getLastName());
         teacher.setFirstName(teacherDetails.getFirstName());
+        teacher.setLastName(teacherDetails.getLastName());
+        teacher.setEmailId(teacherDetails.getEmailId());
+        teacher.setFirst_subject(teacherDetails.getFirst_subject());
+        teacher.setSecond_subject(teacherDetails.getSecond_subject());
+        teacher.setThird_subject(teacherDetails.getThird_subject());
+
         final Teacher updatedTeacher = teacherRepository.save(teacher);
         return ResponseEntity.ok(updatedTeacher);
     }
@@ -56,13 +60,12 @@ public class TeacherController {
     public Map<String, Boolean> deleteTeacher(@PathVariable(value = "id") Long teacherID)
             throws ResourceNotFoundException {
         Teacher teacher = teacherRepository.findById(teacherID)
-                .orElseThrow(() -> new ResourceNotFoundException("Student not found for this id :: " + teacherID));
+                .orElseThrow(() -> new ResourceNotFoundException("Teacher not found for this id :: " + teacherID));
 
         teacherRepository.delete(teacher);
         Map<String, Boolean> response = new HashMap<>();
         response.put("deleted", Boolean.TRUE);
         return response;
     }
-
 
 }

@@ -34,7 +34,7 @@ public class Teacher {
         this.first_subject = first_subject;
     }
 
-    @Column(name = "second_subject", nullable = true)
+    @Column(name = "second_subject")
     public String getSecond_subject() {
         return second_subject;
     }
@@ -43,7 +43,7 @@ public class Teacher {
         this.second_subject = second_subject;
     }
 
-    @Column(name = "third_subject", nullable = true)
+    @Column(name = "third_subject")
     public String getThird_subject() {
         return third_subject;
     }
