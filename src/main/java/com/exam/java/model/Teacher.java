@@ -12,8 +12,8 @@ public class Teacher {
     private String first_subject;
     private String second_subject;
     private String third_subject;
+    private String fourth_subject;
     private long teacherID;
-
 
     @Id
     @GeneratedValue
@@ -52,6 +52,14 @@ public class Teacher {
         this.third_subject = third_subject;
     }
 
+    @Column(name = "fourth_subject")
+    public String getFourth_subject() {
+        return fourth_subject;
+    }
+
+    public void setFourth_subject(String fourth_subject) {
+        this.fourth_subject = fourth_subject;
+    }
 
     @Column(name = "first_name", nullable = false)
     public String getFirstName() {
@@ -89,6 +97,7 @@ public class Teacher {
                 ", first_subject='" + first_subject + '\'' +
                 ", second_subject='" + second_subject + '\'' +
                 ", third_subject='" + third_subject + '\'' +
+                ", fourth_subject='" + fourth_subject + '\'' +
                 ", teacherID=" + teacherID +
                 '}';
     }

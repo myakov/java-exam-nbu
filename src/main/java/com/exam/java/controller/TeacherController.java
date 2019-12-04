@@ -5,6 +5,7 @@ import com.exam.java.exception.ResourceNotFoundException;
 import com.exam.java.model.Teacher;
 import com.exam.java.repository.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,8 +36,15 @@ public class TeacherController {
     }
 
     @PostMapping("/teachers")
-    public Teacher createTeacher(@Valid @RequestBody Teacher teacher) {
-        return teacherRepository.save(teacher);
+    public ResponseEntity<String> createTeachers(@Valid @RequestBody List<Teacher> teacherList) {
+        teacherRepository.saveAll(teacherList);
+        return new ResponseEntity<>("Teachers inserted successfully", HttpStatus.OK);
+    }
+
+    @PostMapping("/teacher")
+    public ResponseEntity<String> createTeacher(@Valid @RequestBody Teacher teacher) {
+        teacherRepository.save(teacher);
+        return new ResponseEntity<>("Teacher inserted successfully", HttpStatus.OK);
     }
 
     @PutMapping("/teachers/{id}")
@@ -51,6 +59,7 @@ public class TeacherController {
         teacher.setFirst_subject(teacherDetails.getFirst_subject());
         teacher.setSecond_subject(teacherDetails.getSecond_subject());
         teacher.setThird_subject(teacherDetails.getThird_subject());
+        teacher.setFourth_subject(teacherDetails.getFourth_subject());
 
         final Teacher updatedTeacher = teacherRepository.save(teacher);
         return ResponseEntity.ok(updatedTeacher);

@@ -1,12 +1,7 @@
 package com.exam.java.model;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "students")
@@ -18,11 +13,14 @@ public class Student {
     private String emailId;
     private int grade;
     private String school;
+    private int science_grades;
+    private int technology_grades;
+    private int engineering_grades;
+    private int maths_grades;
 
     public Student() {
 
     }
-
 
     public Student(String firstName, String lastName, String emailId, int grade, String school) {
         this.firstName = firstName;
@@ -87,15 +85,55 @@ public class Student {
         this.school = school;
     }
 
+    @Column(name = "science_grades", nullable = false)
+    public int getScience_grades() {
+        return science_grades;
+    }
+
+    public void setScience_grades(int science_grades) {
+        this.science_grades = science_grades;
+    }
+
+    @Column(name = "technology_grades", nullable = false)
+    public int getTechnology_grades() {
+        return technology_grades;
+    }
+
+    public void setTechnology_grades(int technology_grades) {
+        this.technology_grades = technology_grades;
+    }
+
+    @Column(name = "engineering_grades", nullable = false)
+    public int getEngineering_grades() {
+        return engineering_grades;
+    }
+
+    public void setEngineering_grades(int engineering_grades) {
+        this.engineering_grades = engineering_grades;
+    }
+
+    @Column(name = "maths_grades", nullable = false)
+    public int getMaths_grades() {
+        return maths_grades;
+    }
+
+    public void setMaths_grades(int maths_grades) {
+        this.maths_grades = maths_grades;
+    }
+
     @Override
     public String toString() {
         return "Student{" +
-                "school=" + school +
-                ", id=" + id +
+                "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", emailId='" + emailId + '\'' +
                 ", grade=" + grade +
+                ", school='" + school + '\'' +
+                ", science_grades=" + science_grades +
+                ", technology_grades=" + technology_grades +
+                ", engineering_grades=" + engineering_grades +
+                ", maths_grades=" + maths_grades +
                 '}';
     }
 }
