@@ -7,6 +7,7 @@ import javax.persistence.*;
 @Table(name = "students")
 public class Student {
 
+
     private long id;
     private String firstName;
     private String lastName;
@@ -19,7 +20,6 @@ public class Student {
     private int maths_grades;
 
     public Student() {
-
     }
 
     public Student(String firstName, String lastName, String emailId, int grade, String school) {

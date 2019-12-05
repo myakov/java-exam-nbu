@@ -23,4 +23,6 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
 
     @Query(value = "SELECT CAST(AVG(maths_grades) AS DECIMAL(10,2)) from public.students where school = ?1", nativeQuery = true)
     String findAvgMathsGrdesByAcademy(String academyName);
+
+
 }

@@ -1,12 +1,10 @@
 package com.exam.java.controller;
 
-import java.text.DecimalFormat;
 import java.util.HashMap;
 
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
 import javax.validation.Valid;
 
 import com.exam.java.exception.ResourceNotFoundException;
@@ -86,7 +84,7 @@ public class StudentController {
         return ResponseEntity.ok(updatedStudent);
     }
 
-    @DeleteMapping("/students/{id}")
+    @DeleteMapping("/student/{id}")
     public Map<String, Boolean> deleteStudent(@PathVariable(value = "id") Long studentID)
             throws ResourceNotFoundException {
         Student student = studentRepository.findById(studentID)

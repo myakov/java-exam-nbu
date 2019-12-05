@@ -1,6 +1,5 @@
 package com.exam.java.model;
 
-
 import javax.persistence.*;
 
 @Entity
@@ -8,23 +7,33 @@ import javax.persistence.*;
 public class HighSchool {
 
 
-    private long id;
+    private int id;
     private String name;
     private String address;
     private int phone_number;
 
+    public HighSchool() {
+    }
+
+    public HighSchool(int id, String name, String address, int phone_number) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+        this.phone_number = phone_number;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public long getId() {
+    @Column(name = "id")
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", unique = true)
     public String getName() {
         return name;
     }
@@ -42,23 +51,12 @@ public class HighSchool {
         this.address = address;
     }
 
-    @Column(name = "phone_number")
-    public int getPhoneNumber() {
+    @Column(name = "phone_number", unique = true)
+    public int getPhone_number() {
         return phone_number;
     }
 
-    public void setPhoneNumber(int phone_number) {
-        this.phone_number = phone_number;
-    }
-
-    public HighSchool() {
-
-    }
-
-    public HighSchool(long id, String name, String address, int phone_number) {
-        this.id = id;
-        this.name = name;
-        this.address = address;
+    public void setPhone_number(int phone_number) {
         this.phone_number = phone_number;
     }
 
