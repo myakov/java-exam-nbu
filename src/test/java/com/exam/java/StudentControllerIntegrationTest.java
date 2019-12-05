@@ -21,76 +21,76 @@ import org.springframework.web.client.HttpClientErrorException;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class StudentControllerIntegrationTest {
-	@Autowired
-	private TestRestTemplate restTemplate;
+    @Autowired
+    private TestRestTemplate restTemplate;
 
-	@LocalServerPort
-	private int port;
+    @LocalServerPort
+    private int port;
 
-	private String getRootUrl() {
-		return "http://localhost:" + port;
-	}
+    private String getRootUrl() {
+        return "http://localhost:" + port;
+    }
 
-	@Test
-	public void contextLoads() {
+    @Test
+    public void contextLoads() {
 
-	}
+    }
 
-	@Test
-	public void testGetAllEmployees() {
-		HttpHeaders headers = new HttpHeaders();
-		HttpEntity<String> entity = new HttpEntity<String>(null, headers);
+    @Test
+    public void testGetAllEmployees() {
+        HttpHeaders headers = new HttpHeaders();
+        HttpEntity<String> entity = new HttpEntity<String>(null, headers);
 
-		ResponseEntity<String> response = restTemplate.exchange(getRootUrl() + "/employees",
-				HttpMethod.GET, entity, String.class);
-		
-		assertNotNull(response.getBody());
-	}
+        ResponseEntity<String> response = restTemplate.exchange(getRootUrl() + "/employees",
+                HttpMethod.GET, entity, String.class);
 
-	@Test
-	public void testGetEmployeeById() {
-		Student student = restTemplate.getForObject(getRootUrl() + "/employees/1", Student.class);
-		System.out.println(student.getFirstName());
-		assertNotNull(student);
-	}
+        assertNotNull(response.getBody());
+    }
 
-	@Test
-	public void testCreateEmployee() {
-		Student student = new Student();
-		student.setEmailId("admin@gmail.com");
-		student.setFirstName("admin");
-		student.setLastName("admin");
+    @Test
+    public void testGetEmployeeById() {
+        Student student = restTemplate.getForObject(getRootUrl() + "/employees/1", Student.class);
+        System.out.println(student.getFirstName());
+        assertNotNull(student);
+    }
 
-		ResponseEntity<Student> postResponse = restTemplate.postForEntity(getRootUrl() + "/employees", student, Student.class);
-		assertNotNull(postResponse);
-		assertNotNull(postResponse.getBody());
-	}
+    @Test
+    public void testCreateEmployee() {
+        Student student = new Student();
+        student.setEmailId("admin@gmail.com");
+        student.setFirstName("admin");
+        student.setLastName("admin");
 
-	@Test
-	public void testUpdateEmployee() {
-		int id = 1;
-		Student student = restTemplate.getForObject(getRootUrl() + "/employees/" + id, Student.class);
-		student.setFirstName("admin1");
-		student.setLastName("admin2");
+        ResponseEntity<Student> postResponse = restTemplate.postForEntity(getRootUrl() + "/employees", student, Student.class);
+        assertNotNull(postResponse);
+        assertNotNull(postResponse.getBody());
+    }
 
-		restTemplate.put(getRootUrl() + "/employees/" + id, student);
+    @Test
+    public void testUpdateEmployee() {
+        int id = 1;
+        Student student = restTemplate.getForObject(getRootUrl() + "/employees/" + id, Student.class);
+        student.setFirstName("admin1");
+        student.setLastName("admin2");
 
-		Student updatedStudent = restTemplate.getForObject(getRootUrl() + "/employees/" + id, Student.class);
-		assertNotNull(updatedStudent);
-	}
+        restTemplate.put(getRootUrl() + "/employees/" + id, student);
 
-	@Test
-	public void testDeleteEmployee() {
-		int id = 2;
-		Student student = restTemplate.getForObject(getRootUrl() + "/employees/" + id, Student.class);
-		assertNotNull(student);
+        Student updatedStudent = restTemplate.getForObject(getRootUrl() + "/employees/" + id, Student.class);
+        assertNotNull(updatedStudent);
+    }
 
-		restTemplate.delete(getRootUrl() + "/employees/" + id);
+    @Test
+    public void testDeleteEmployee() {
+        int id = 2;
+        Student student = restTemplate.getForObject(getRootUrl() + "/employees/" + id, Student.class);
+        assertNotNull(student);
 
-		try {
-			student = restTemplate.getForObject(getRootUrl() + "/employees/" + id, Student.class);
-		} catch (final HttpClientErrorException e) {
-			assertEquals(e.getStatusCode(), HttpStatus.NOT_FOUND);
-		}
-	}
+        restTemplate.delete(getRootUrl() + "/employees/" + id);
+
+        try {
+            student = restTemplate.getForObject(getRootUrl() + "/employees/" + id, Student.class);
+        } catch (final HttpClientErrorException e) {
+            assertEquals(e.getStatusCode(), HttpStatus.NOT_FOUND);
+        }
+    }
 }

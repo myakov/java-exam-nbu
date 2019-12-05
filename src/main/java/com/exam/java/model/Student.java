@@ -1,7 +1,10 @@
 package com.exam.java.model;
 
-
 import javax.persistence.*;
+
+/**
+ * Model class representing Student entity
+ */
 
 @Entity
 @Table(name = "students")

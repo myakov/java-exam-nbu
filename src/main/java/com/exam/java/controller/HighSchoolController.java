@@ -10,12 +10,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.math.BigInteger;
-import java.text.DecimalFormat;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.exam.java.model.Academy.*;
+
+/**
+ * Controller class responsible for mapping request related to /highschool endpoint
+ */
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -35,16 +38,15 @@ public class HighSchoolController {
     public Map<String, Float> getAvgGradesByAcademy(@RequestParam String academy) throws ResourceNotFoundException {
         final List<Float> list;
         final Map<String, Float> grades = new HashMap<>();
-        if (!academy.equals("Bulgarian academy") && !academy.equals("Russian academy") &&
-                !academy.equals("English academy")) {
+        if (!academy.equals(BULGARIAN_ACADEMY) && !academy.equals(RUSSIAN_ACADEMY) &&
+                !academy.equals(ENGLISH_ACADEMY)) {
             throw new ResourceNotFoundException("Academy with name : " + academy + " is not presented");
         }
-
         list = highSchoolRepository.findAverageOfAllSubjectsBasedOnAcademy((academy));
-        grades.put("Science", list.get(0));
-        grades.put("Technology", list.get(1));
-        grades.put("Engineering", list.get(2));
-        grades.put("Maths", list.get(3));
+        grades.put(Subjects.SCIENCE, list.get(0));
+        grades.put(Subjects.TECHNOLOGY, list.get(1));
+        grades.put(Subjects.ENGINEERING, list.get(2));
+        grades.put(Subjects.MATHS, list.get(3));
         return grades;
         //    return "Average grades in " + academy + " for STEM subjects is: " + list);
     }

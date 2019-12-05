@@ -1,7 +1,10 @@
 package com.exam.java.model;
 
 import javax.persistence.*;
-import java.util.Set;
+
+/**
+ * Model class representing Teacher entity
+ */
 
 @Entity
 @Table(name = "teacher")
@@ -15,10 +18,6 @@ public class Teacher {
     private String third_subject;
     private String fourth_subject;
     private long teacherID;
-    private Student student;
-
-    @OneToMany(mappedBy = "highSchool")
-    private Set<Student> studentSet;
 
     public Teacher() {
     }

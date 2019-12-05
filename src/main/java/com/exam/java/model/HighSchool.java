@@ -2,6 +2,10 @@ package com.exam.java.model;
 
 import javax.persistence.*;
 
+/**
+ * Model class representing High School entity
+ */
+
 @Entity
 @Table(name = "high_school")
 public class HighSchool {
@@ -70,6 +74,5 @@ public class HighSchool {
                 '}';
     }
 }
-
 
 

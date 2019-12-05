@@ -1,10 +1,8 @@
 package com.exam.java.controller;
 
 import java.util.HashMap;
-
 import java.util.List;
 import java.util.Map;
-
 import javax.validation.Valid;
 
 import com.exam.java.exception.ResourceNotFoundException;
@@ -14,8 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import com.exam.java.repository.StudentRepository;
+
+/**
+ * Controller class responsible for mapping request related to /students endpoint
+ */
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -30,12 +31,19 @@ public class StudentController {
         return studentRepository.findAll();
     }
 
+    @GetMapping("/students/avgStudendGrades")
+    public Float getAvgGradesByStudent(@RequestParam String first_name, String last_name) throws ResourceNotFoundException {
+        float avgGrade = studentRepository.findAvgGradesByStudent(first_name, last_name);
+        return avgGrade / 4;
+
+    }
+
     @GetMapping("/students/avgGrades")
     public String getAvgGradeByAcademyandSubjects(@RequestParam String subject, String academy) throws ResourceNotFoundException {
 
         if (subject.equalsIgnoreCase(Subjects.SCIENCE)) {
             return "Average Science grades in " + academy + " is: " + studentRepository.findAvgScienceGrdesByAcademy(academy);
-        } else if (subject.equalsIgnoreCase(Subjects.TECHOLOGY)) {
+        } else if (subject.equalsIgnoreCase(Subjects.TECHNOLOGY)) {
             return "Average Technology grades in " + academy + " is: " + studentRepository.findAvgTechnologyGrdesByAcademy(academy);
         } else if (subject.equalsIgnoreCase(Subjects.ENGINEERING)) {
             return "Average Engineering grades in " + academy + " is: " + studentRepository.findAvgEngGrdesByAcademy(academy);
