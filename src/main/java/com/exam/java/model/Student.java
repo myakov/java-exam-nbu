@@ -1,6 +1,7 @@
 package com.exam.java.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Model class representing Student entity
@@ -21,6 +22,7 @@ public class Student {
     private int technology_grades;
     private int engineering_grades;
     private int maths_grades;
+
 
     public Student() {
     }

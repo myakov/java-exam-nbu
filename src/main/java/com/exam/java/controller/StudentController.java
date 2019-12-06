@@ -11,6 +11,7 @@ import com.exam.java.model.Subjects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import com.exam.java.repository.StudentRepository;
 
@@ -27,18 +28,20 @@ public class StudentController {
     private StudentRepository studentRepository;
 
     @GetMapping("/students")
+    @PreAuthorize("hasAuthority('ADMINISTRATOR') or hasAuthority('STANDARD_USER')")
     public List<Student> getAllstudents() {
         return studentRepository.findAll();
     }
 
     @GetMapping("/students/avgStudendGrades")
+    @PreAuthorize("hasAuthority('ADMINISTRATOR') or hasAuthority('STANDARD_USER')")
     public Float getAvgGradesByStudent(@RequestParam String first_name, String last_name) throws ResourceNotFoundException {
         float avgGrade = studentRepository.findAvgGradesByStudent(first_name, last_name);
         return avgGrade / 4;
-
     }
 
     @GetMapping("/students/avgGrades")
+    @PreAuthorize("hasAuthority('ADMINISTRATOR') or hasAuthority('STANDARD_USER')")
     public String getAvgGradeByAcademyandSubjects(@RequestParam String subject, String academy) throws ResourceNotFoundException {
 
         if (subject.equalsIgnoreCase(Subjects.SCIENCE)) {
@@ -54,6 +57,7 @@ public class StudentController {
     }
 
     @GetMapping("/students/{id}")
+    @PreAuthorize("hasAuthority('ADMINISTRATOR') or hasAuthority('STANDARD_USER')")
     public ResponseEntity<Student> getStudentsById(@PathVariable(value = "id") Long studentID)
             throws ResourceNotFoundException {
         Student student = studentRepository.findById(studentID)
@@ -62,18 +66,22 @@ public class StudentController {
     }
 
     @PostMapping("/students")
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     public ResponseEntity<String> createStudents(@Valid @RequestBody final List<Student> studentList) {
         studentRepository.saveAll(studentList);
         return new ResponseEntity<>("Students inserted successfully", HttpStatus.OK);
     }
 
-
     @PostMapping("/student")
-    public void createStudent(@Valid @RequestBody final Student student) {
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
+    public ResponseEntity<String> createStudent(@Valid @RequestBody final Student student) {
         studentRepository.save(student);
+        return new ResponseEntity<>("Students inserted successfully", HttpStatus.OK);
+
     }
 
     @PutMapping("/students/{id}")
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     public ResponseEntity<Student> updateStudent(@PathVariable(value = "id") Long studentID,
                                                  @Valid @RequestBody Student studentDetails) throws ResourceNotFoundException {
         Student student = studentRepository.findById(studentID)
@@ -93,6 +101,7 @@ public class StudentController {
     }
 
     @DeleteMapping("/student/{id}")
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     public Map<String, Boolean> deleteStudent(@PathVariable(value = "id") Long studentID)
             throws ResourceNotFoundException {
         Student student = studentRepository.findById(studentID)
