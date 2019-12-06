@@ -36,19 +36,19 @@ public class HighSchoolController {
 
     @GetMapping("/highschool/avgGradesByAcademy")
     public Map<String, Float> getAvgGradesByAcademy(@RequestParam String academy) throws ResourceNotFoundException {
-        final List<Float> list;
+        final List<Float> avgGradesList;
         final Map<String, Float> grades = new HashMap<>();
         if (!academy.equals(BULGARIAN_ACADEMY) && !academy.equals(RUSSIAN_ACADEMY) &&
                 !academy.equals(ENGLISH_ACADEMY)) {
             throw new ResourceNotFoundException("Academy with name : " + academy + " is not presented");
         }
-        list = highSchoolRepository.findAverageOfAllSubjectsBasedOnAcademy((academy));
-        grades.put(Subjects.SCIENCE, list.get(0));
-        grades.put(Subjects.TECHNOLOGY, list.get(1));
-        grades.put(Subjects.ENGINEERING, list.get(2));
-        grades.put(Subjects.MATHS, list.get(3));
+        avgGradesList = highSchoolRepository.findAverageOfAllSubjectsBasedOnAcademy((academy));
+        grades.put(Subjects.SCIENCE, avgGradesList.get(0));
+        grades.put(Subjects.TECHNOLOGY, avgGradesList.get(1));
+        grades.put(Subjects.ENGINEERING, avgGradesList.get(2));
+        grades.put(Subjects.MATHS, avgGradesList.get(3));
         return grades;
-        //    return "Average grades in " + academy + " for STEM subjects is: " + list);
+        //    return "Average grades in " + academy + " for STEM subjects is: " + avgGradesList);
     }
 
     @GetMapping("/highschool/{id}")
