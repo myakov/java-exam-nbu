@@ -7,6 +7,7 @@ import com.exam.java.repository.HighSchoolRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -30,10 +31,12 @@ public class HighSchoolController {
     private HighSchoolRepository highSchoolRepository;
 
     @GetMapping("/highschool")
+    @PreAuthorize("hasAuthority('ADMINISTRATOR') or hasAuthority('STANDARD_USER')")
     public List<HighSchool> getAllHighSchools() {
         return highSchoolRepository.findAll();
     }
 
+    @PreAuthorize("hasAuthority('ADMINISTRATOR') or hasAuthority('STANDARD_USER')")
     @GetMapping("/highschool/avgGradesByAcademy")
     public Map<String, Float> getAvgGradesByAcademy(@RequestParam String academy) throws ResourceNotFoundException {
         final List<Float> avgGradesList;
@@ -51,6 +54,7 @@ public class HighSchoolController {
         //    return "Average grades in " + academy + " for STEM subjects is: " + avgGradesList);
     }
 
+    @PreAuthorize("hasAuthority('ADMINISTRATOR') or hasAuthority('STANDARD_USER')")
     @GetMapping("/highschool/{id}")
     public ResponseEntity<HighSchool> getHighSchoolById(@PathVariable(value = "id") Long highschoolID)
             throws ResourceNotFoundException {
@@ -59,6 +63,7 @@ public class HighSchoolController {
         return ResponseEntity.ok().body(highSchool);
     }
 
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     @PostMapping("/highschools")
     public ResponseEntity<String> createHighSchoolds(@Valid @RequestBody final List<HighSchool> highSchoolList) {
         highSchoolRepository.saveAll(highSchoolList);
@@ -66,11 +71,13 @@ public class HighSchoolController {
     }
 
 
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     @PostMapping("/highschool")
     public void createStudent(@Valid @RequestBody final HighSchool highSchool) {
         highSchoolRepository.save(highSchool);
     }
 
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     @PutMapping("/highschool/{id}")
     public ResponseEntity<HighSchool> updateHighSchool(@PathVariable(value = "id") Long highschoolID,
                                                        @Valid @RequestBody HighSchool highSchoolDetails) throws ResourceNotFoundException {
@@ -85,6 +92,7 @@ public class HighSchoolController {
         return ResponseEntity.ok(updatedHighSchool);
     }
 
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     @DeleteMapping("/highschool/{id}")
     public Map<String, Boolean> deleteHighSchool(@PathVariable(value = "id") Long highschoolID)
             throws ResourceNotFoundException {

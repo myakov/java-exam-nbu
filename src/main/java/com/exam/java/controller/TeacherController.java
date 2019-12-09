@@ -7,6 +7,7 @@ import com.exam.java.repository.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -27,11 +28,13 @@ public class TeacherController {
     private TeacherRepository teacherRepository;
 
     @GetMapping("/teachers")
+    @PreAuthorize("hasAuthority('ADMINISTRATOR') or hasAuthority('STANDARD_USER')")
     public List<Teacher> getAllTeachers() {
         return teacherRepository.findAll();
     }
 
     @GetMapping("/teachers/{id}")
+    @PreAuthorize("hasAuthority('ADMINISTRATOR') or hasAuthority('STANDARD_USER')")
     public ResponseEntity<Teacher> getTeacherById(@PathVariable(value = "id") Long teacherID)
             throws ResourceNotFoundException {
         Teacher teacher = teacherRepository.findById(teacherID)
@@ -40,11 +43,13 @@ public class TeacherController {
     }
 
     @PostMapping("/teachers")
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     public ResponseEntity<String> createTeachers(@Valid @RequestBody List<Teacher> teacherList) {
         teacherRepository.saveAll(teacherList);
         return new ResponseEntity<>("Teachers inserted successfully", HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     @PostMapping("/teacher")
     public ResponseEntity<String> createTeacher(@Valid @RequestBody Teacher teacher) {
         teacherRepository.save(teacher);
@@ -52,6 +57,7 @@ public class TeacherController {
     }
 
     @PutMapping("/teachers/{id}")
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     public ResponseEntity<Teacher> updateTeacher(@PathVariable(value = "id") Long teacherID,
                                                  @Valid @RequestBody Teacher teacherDetails) throws ResourceNotFoundException {
         Teacher teacher = teacherRepository.findById(teacherID)
@@ -70,6 +76,7 @@ public class TeacherController {
     }
 
     @DeleteMapping("/teachers/{id}")
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     public Map<String, Boolean> deleteTeacher(@PathVariable(value = "id") Long teacherID)
             throws ResourceNotFoundException {
         Teacher teacher = teacherRepository.findById(teacherID)
@@ -80,5 +87,4 @@ public class TeacherController {
         response.put("deleted", Boolean.TRUE);
         return response;
     }
-
 }

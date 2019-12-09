@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import com.exam.java.exception.ResourceNotFoundException;
+import com.exam.java.model.Academy;
 import com.exam.java.model.Student;
 import com.exam.java.model.Subjects;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import com.exam.java.repository.StudentRepository;
 
 /**
  * Controller class responsible for mapping request related to /students endpoint
+ * and filtering requests based on authorization rules declared in @PreAuthorize clause
  */
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -87,6 +89,75 @@ public class StudentController {
         Student student = studentRepository.findById(studentID)
                 .orElseThrow(() -> new ResourceNotFoundException("Student not found for this id :: " + studentID));
 
+        student.setFirstName(studentDetails.getFirstName());
+        student.setLastName(studentDetails.getLastName());
+        student.setEmailId(studentDetails.getEmailId());
+        student.setGrade(studentDetails.getGrade());
+        student.setSchool(studentDetails.getSchool());
+        student.setScience_grades(studentDetails.getScience_grades());
+        student.setTechnology_grades(studentDetails.getTechnology_grades());
+        student.setEngineering_grades(studentDetails.getEngineering_grades());
+        student.setMaths_grades(studentDetails.getMaths_grades());
+        final Student updatedStudent = studentRepository.save(student);
+        return ResponseEntity.ok(updatedStudent);
+    }
+
+    @PutMapping("/students/uk/{id}")
+    @PreAuthorize("hasAuthority('ADMINISTRATOR') or hasAuthority('ENGLISH_TEACHER')")
+    public ResponseEntity<Student> updateEnglishStudentInfo(@PathVariable(value = "id") Long studentID,
+                                                            @Valid @RequestBody Student studentDetails) throws ResourceNotFoundException {
+        Student student = studentRepository.findById(studentID)
+                .orElseThrow(() -> new ResourceNotFoundException("Student not found for this id :: " + studentID));
+
+        if (!student.getSchool().equalsIgnoreCase(Academy.ENGLISH_ACADEMY)) {
+            throw new ResourceNotFoundException("Student " + studentID + " is not in English academy");
+        }
+        student.setFirstName(studentDetails.getFirstName());
+        student.setLastName(studentDetails.getLastName());
+        student.setEmailId(studentDetails.getEmailId());
+        student.setGrade(studentDetails.getGrade());
+        student.setSchool(studentDetails.getSchool());
+        student.setScience_grades(studentDetails.getScience_grades());
+        student.setTechnology_grades(studentDetails.getTechnology_grades());
+        student.setEngineering_grades(studentDetails.getEngineering_grades());
+        student.setMaths_grades(studentDetails.getMaths_grades());
+        final Student updatedStudent = studentRepository.save(student);
+        return ResponseEntity.ok(updatedStudent);
+    }
+
+    @PutMapping("/students/bg/{id}")
+    @PreAuthorize("hasAuthority('ADMINISTRATOR') or hasAuthority('BULGARIAN_TEACHER')")
+    public ResponseEntity<Student> updateBulgarianStudentInfo(@PathVariable(value = "id") Long studentID,
+                                                              @Valid @RequestBody Student studentDetails) throws ResourceNotFoundException {
+        Student student = studentRepository.findById(studentID)
+                .orElseThrow(() -> new ResourceNotFoundException("Student not found for this id :: " + studentID));
+
+        if (!student.getSchool().equalsIgnoreCase(Academy.BULGARIAN_ACADEMY)) {
+            throw new ResourceNotFoundException("Student " + studentID + " is not in Bulgarian academy");
+        }
+        student.setFirstName(studentDetails.getFirstName());
+        student.setLastName(studentDetails.getLastName());
+        student.setEmailId(studentDetails.getEmailId());
+        student.setGrade(studentDetails.getGrade());
+        student.setSchool(studentDetails.getSchool());
+        student.setScience_grades(studentDetails.getScience_grades());
+        student.setTechnology_grades(studentDetails.getTechnology_grades());
+        student.setEngineering_grades(studentDetails.getEngineering_grades());
+        student.setMaths_grades(studentDetails.getMaths_grades());
+        final Student updatedStudent = studentRepository.save(student);
+        return ResponseEntity.ok(updatedStudent);
+    }
+
+    @PutMapping("/students/rus/{id}")
+    @PreAuthorize("hasAuthority('ADMINISTRATOR') or hasAuthority('RUSSIAN_TEACHER')")
+    public ResponseEntity<Student> updateRussianStudentInfo(@PathVariable(value = "id") Long studentID,
+                                                            @Valid @RequestBody Student studentDetails) throws ResourceNotFoundException {
+        Student student = studentRepository.findById(studentID)
+                .orElseThrow(() -> new ResourceNotFoundException("Student not found for this id :: " + studentID));
+
+        if (!student.getSchool().equalsIgnoreCase(Academy.RUSSIAN_ACADEMY)) {
+            throw new ResourceNotFoundException("Student " + studentID + " is not in Russian academy");
+        }
         student.setFirstName(studentDetails.getFirstName());
         student.setLastName(studentDetails.getLastName());
         student.setEmailId(studentDetails.getEmailId());
