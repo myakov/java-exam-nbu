@@ -23,3 +23,10 @@ INSERT INTO user_role(user_id, role_id) VALUES(2,2);
 INSERT INTO user_role(user_id, role_id) VALUES(3,3);
 INSERT INTO user_role(user_id, role_id) VALUES(4,4);
 INSERT INTO user_role(user_id, role_id) VALUES(5,5);
+
+
+
+
+--insert into students (add table names)values (1,"test","test","test",4,"test",4,5,6,7);
+
+

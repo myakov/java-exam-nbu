@@ -1,5 +1,7 @@
 package com.exam.java.model;
 
+import io.swagger.annotations.ApiModel;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -9,6 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "students")
+@ApiModel(description = "All details about the Students. ")
 public class Student {
 
 

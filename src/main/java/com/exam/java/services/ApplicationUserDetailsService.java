@@ -1,5 +1,6 @@
 package com.exam.java.services;
 
+import com.exam.java.model.Role;
 import com.exam.java.model.User;
 import com.exam.java.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +29,9 @@ public class ApplicationUserDetailsService implements UserDetailsService {
         }
 
         List<GrantedAuthority> authorities = new ArrayList<>();
-        user.getRoles().forEach(role -> {
+        for (Role role : user.getRoles()) {
             authorities.add(new SimpleGrantedAuthority(role.getRoleName()));
-        });
+        }
 
         UserDetails userDetails = new org.springframework.security.core.userdetails.
                 User(user.getUsername(), user.getPassword(), authorities);

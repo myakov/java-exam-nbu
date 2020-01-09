@@ -9,6 +9,8 @@ import com.exam.java.exception.ResourceNotFoundException;
 import com.exam.java.model.Academy;
 import com.exam.java.model.Student;
 import com.exam.java.model.Subjects;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +26,7 @@ import com.exam.java.repository.StudentRepository;
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/v1")
+@Api(value = "Student Controller")
 public class StudentController {
 
     @Autowired

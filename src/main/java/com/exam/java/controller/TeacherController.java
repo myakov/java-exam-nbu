@@ -4,6 +4,7 @@ package com.exam.java.controller;
 import com.exam.java.exception.ResourceNotFoundException;
 import com.exam.java.model.Teacher;
 import com.exam.java.repository.TeacherRepository;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,7 @@ import java.util.Map;
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/v1")
+@Api(value="Teacher Controller")
 public class TeacherController {
 
     @Autowired
